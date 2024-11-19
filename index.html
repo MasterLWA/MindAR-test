@@ -15,14 +15,32 @@
       overflow: hidden;
     }
     a-scene {
+      width: 100vw;
       height: 100vh;
+    }
+    #instructions {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
+  <!-- Instructions for the User -->
+  <div id="instructions">
+    Point your camera at the target image to see the 3D object.
+  </div>
+
   <!-- AR Scene -->
   <a-scene
-    mindar-image="imageTargetSrc: ./Assets/Target/targets.mind; autoStart: true;"
+    mindar-image="imageTargetSrc: https://raw.githubusercontent.com/MasterLWA/MindAR-test/refs/heads/main/Assets/Target/targets.mind; autoStart: true;"
     embedded
     color-space="sRGB"
     vr-mode-ui="enabled: false"
@@ -31,7 +49,7 @@
     <!-- Assets for the Scene -->
     <a-assets>
       <!-- 3D Model -->
-      <a-asset-item id="model" src="./Assets/Model/ELE.gltf"></a-asset-item>
+      <a-asset-item id="model" src="https://raw.githubusercontent.com/MasterLWA/MindAR-test/refs/heads/main/Assets/Model/ELE.gltf"></a-asset-item>
     </a-assets>
 
     <!-- Camera -->
@@ -40,7 +58,14 @@
     <!-- 3D Object Displayed on the First Image Target -->
     <a-entity mindar-image-target="targetIndex: 0">
       <!-- Display the 3D Model -->
-      <a-entity gltf-model="#model" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+      <a-entity 
+        gltf-model="#model" 
+        scale="0.5 0.5 0.5" 
+        position="0 0 0" 
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
+        event-set__mouseenter="scale: 0.6 0.6 0.6" 
+        event-set__mouseleave="scale: 0.5 0.5 0.5">
+      </a-entity>
     </a-entity>
   </a-scene>
 </body>
